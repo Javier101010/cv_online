@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Funciones Booleanas</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body class="body">
+  <div class="container-fluid intro" id="intro">
+    <div class="row">
+      <div class="col-12">
+        <div class="text-center">
+          <h2>Funciones Booleanas</h2>
+          <br>
+          <h5>Matematica Discreta</h5>
+          <h5>Grupo 3</h5>
+          <br>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="container-fluid principal" id="principal">
+        <h1 class="titulo">Funciones Booleanas</h1>
+        <hr>
+        <br>
+
+        <div class="row">
+          <div class="col-5">
+            <div class="scrollspy-example" style="height: 500px; overflow-y: auto;">
+              
+              <div class="card mb-3 leyes" id="ley1">
+                <h5 class="card-header leyesub">Ley de Idempotencia</h5>
+                <div class="card-body">
+                  <h6 class="mb-2">A v A = A, A ^ A = A</h6>
+                </div>
+              </div>
+              
+              <div class="card mb-3 leyes" id="ley2">
+                <h5 class="card-header leyesub">Ley de Involución</h5>
+                <div class="card-body">
+                  <h6 class="mb-2">~~A = A</h6>
+                </div>
+              </div>
+              
+              <div class="card mb-3 leyes" id="ley3">
+                <h5 class="card-header leyesub">Ley de Complemento</h5>
+                <div class="card-body">
+                  <h6 class="mb-2">A v ~A = 1, A ^ ~A = 0</h6>
+                </div>
+              </div>
+              
+              <div class="card mb-3 leyes" id="ley4">
+                <h5 class="card-header leyesub">Ley de Absorción</h5>
+                <div class="card-body">
+                  <h6 class="mb-2">A v (A ^ B) = A, A ^ (A v B) = A</h6>
+                </div>
+              </div>
+              
+              <div class="card mb-3 leyes" id="ley5">
+                <h5 class="card-header leyesub">Ley de Distribución</h5>
+                <div class="card-body">
+                  <h6 class="mb-2">A ^ (B v C) = (A ^ B) v (A ^ C)</h6>
+                </div>
+              </div>
+
+              <div class="card mb-3 leyes" id="ley6">
+                <h5 class="card-header leyesub">Neutros Diferentes</h5>
+                <div class="card-body">
+                  <h6 class="mb-2">A v 0 = A, A ^ 1 = A</h6>
+                </div>
+              </div>
+              
+              <div class="card mb-3 leyes" id="ley7">
+                <h5 class="card-header leyesub">Elementos Nulos</h5>
+                <div class="card-body">
+                  <h6 class="mb-2">A v 1 = 1, A ^ 0 = 0</h6>
+                </div>
+              </div>
+              
+              <div class="card mb-3 leyes" id="ley8">
+                <h5 class="card-header leyesub">Ley Demorgan</h5>
+                <div class="card-body">
+                  <h6 class="mb-2">~(A v B) = ~A ^ ~B, ~(A ^ B) = ~A v ~B</h6>
+                </div>
+              </div>
+        
+            </div>
+          </div>
+
+            <div class="col-7">
+                <div class="card">
+                    <h5 class="card-header leyesub">Operar proposición</h5>
+                    <div class="card-body">
+                        <h6 class="mb-2">Opciones</h6>
+                        <button type="button" class="btn btn-primary" id="opAbrirLlave">(</button>
+                        <button type="button" class="btn btn-primary" id="opCerrarLlave">)</button>
+                        <button type="button" class="btn btn-primary" id="opO">V</button>
+                        <button type="button" class="btn btn-primary" id="opY">^</button>
+                        <button type="button" class="btn btn-primary" id="opN">~</button>
+
+                        <form class="mt-3" id="operacionForm">
+                            <div class="form-group mb-3">
+                                <label for="textExpresion">Expresión</label>
+                                <input type="text" class="form-control" id="textExpresion" placeholder="Ingresar expresión">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="textRespuesta">Respuesta</label>
+                                <textarea class="form-control" id="textRespuesta" rows="8"></textarea>
+                            </div>
+                            <button class="btn btn-danger" type="button" id="operarExpresion">
+                              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
+                              <span id="btnText">Realizar Operación...</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="funcion.js"></script>
+</body>
+</html>
