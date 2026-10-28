@@ -1,0 +1,512 @@
+/* ==========================================================
+   Escenario y cámara
+   ========================================================== */
+.stage {
+  --peek-l: 150px;                                   /* fotograma previo, pasa por detrás de las ruedas */
+  position: fixed;
+  inset: 0 0 0 calc(var(--dial-reach) + 24px - var(--peek-l));
+  z-index: 10;
+}
+
+.camera {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.track {
+  position: absolute;
+  top: calc(50% - var(--strip-h) / 2);
+  left: 0;
+  right: 2.5vw;
+  display: flex;
+  flex-direction: column;
+  gap: var(--strip-gap);
+  will-change: transform;
+}
+
+/* ==========================================================
+   Tira de película
+   ========================================================== */
+.strip {
+  flex: none;
+  height: var(--strip-h);
+  display: grid;
+  grid-template-rows: var(--edge-h) 1fr var(--edge-h);
+  grid-template-columns: minmax(0, 1fr); /* el ancho lo fija la tira, no su contenido */
+  background: linear-gradient(180deg, var(--film-edge), var(--film) 12%, var(--film) 88%, var(--film-edge));
+  border-radius: 3px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  filter: blur(7px) brightness(0.5) saturate(0.8);
+  transition: filter 0.3s ease, translate 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Mientras se gira el carrete, el rollo lo sigue sin retraso */
+.strip.is-dragging {
+  transition: filter 0.3s ease;
+}
+
+.stage.is-pulled .strip {
+  filter: blur(1.5px) brightness(0.72) saturate(0.9);
+}
+
+.strip.is-active,
+.stage.is-pulled .strip.is-active {
+  filter: none;
+}
+
+.strip__edge {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.strip__holes {
+  flex: 1;
+  align-self: stretch;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='46'%3E%3Crect x='12' y='13' width='17' height='20' rx='3' fill='rgba(232,220,203,0.86)'/%3E%3C/svg%3E") left center / auto 100% repeat-x;
+}
+
+.strip__holes--short {
+  flex: none;
+  width: calc(var(--edge-h) * 2.6);
+}
+
+.strip__mark {
+  padding: 0 1.1em;
+  font-size: clamp(0.68rem, 1vw, 0.85rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.strip__frames {
+  display: flex;
+  gap: 14px;
+  padding: 0 14px;
+  min-height: 0;
+}
+
+/* ==========================================================
+   Fotogramas
+   ========================================================== */
+.frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #241c16;
+}
+
+.frame--main {
+  flex: 1;
+  min-width: 0; /* no crece con su contenido: lo que sobra lo mide pan.js y alarga la tira */
+}
+
+.frame--peek-l {
+  flex: none;
+  width: calc(var(--peek-l) - 40px);
+}
+
+.frame--peek-r {
+  flex: none;
+  width: clamp(60px, 10%, 160px);
+}
+
+.frame--peek-l .frame__img,
+.frame--peek-r .frame__img {
+  filter: sepia(0.5) saturate(1.1) hue-rotate(-12deg) brightness(0.5);
+}
+
+.frame__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--shot, 50% 50%);
+  /* gradación cálida provisional, para acercar cualquier foto a la paleta */
+  filter: sepia(0.6) saturate(1.45) hue-rotate(-12deg) contrast(1.1) brightness(0.82);
+}
+
+.frame__grade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(10, 7, 5, 0.9) 0%, rgba(10, 7, 5, 0.6) 34%, rgba(10, 7, 5, 0) 68%),
+    linear-gradient(180deg, rgba(255, 140, 40, 0.16), rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.35));
+}
+
+/* ==========================================================
+   Contenido: Sobre mí (saludo + presentación)
+   ========================================================== */
+.hero {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: clamp(28px, 5%, 72px);
+  padding: 24px clamp(24px, 4%, 56px) 24px clamp(24px, 8%, 110px);
+}
+
+.hero__intro {
+  flex: none;
+  max-width: 34rem;
+}
+
+/* Tarjeta oscura: el paisaje sigue visible y el texto se lee bien encima */
+.hero__about {
+  flex: none;
+  width: min(32rem, 100%);
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  gap: 22px;
+  align-items: center;
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  background: rgba(12, 9, 7, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.hero__bio {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+/* Nota sobre el diseño: se descubre al correr el rollo */
+.hero__note {
+  flex: none;
+  width: 20rem;
+  padding: 20px 22px;
+  border-left: 2px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+  background: rgba(12, 9, 7, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.hero__note-q {
+  margin-bottom: 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hero__note-a {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.hero__kicker {
+  margin-bottom: 1.1rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5.2vw, 5rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+}
+
+.hero__title em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero__roles {
+  margin-top: 1.4rem;
+  font-size: clamp(0.95rem, 1.25vw, 1.1rem);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.hero__roles span {
+  margin: 0 0.4em;
+  color: var(--muted);
+}
+
+.hero__rule {
+  width: 52px;
+  height: 2px;
+  margin: 1.3rem 0;
+  border: 0;
+  background: var(--accent);
+}
+
+.hero__tagline {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* Entrada escalonada del texto al terminar el acercamiento */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+.strip.is-revealed .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* ==========================================================
+   Flechas de avance ▲ ▼
+   ========================================================== */
+.advance {
+  position: absolute;
+  left: calc(var(--peek-l) + (100% - var(--peek-l)) / 2 - 22px);
+  z-index: 2;
+  width: 44px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.advance::before {
+  content: '';
+  display: block;
+  width: 18px;
+  height: 13px;
+  margin: auto;
+  background: currentColor;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  filter: drop-shadow(0 0 6px rgba(242, 138, 30, 0.8));
+}
+
+.advance--prev {
+  top: calc(50% - var(--strip-h) / 2 - 56px);
+}
+
+.advance--next {
+  top: calc(50% + var(--strip-h) / 2 + 24px);
+}
+
+.advance--next::before {
+  transform: rotate(180deg);
+}
+
+.advance:disabled,
+.stage.is-moving .advance {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ==========================================================
+   Pista de "hay más a la derecha": sombra suave y una flecha que empuja
+   ========================================================== */
+.more-hint {
+  position: absolute;
+  z-index: 2;
+  top: calc(50% - var(--strip-h) / 2 + var(--edge-h));
+  right: 0;
+  width: clamp(70px, 9vw, 130px);
+  height: calc(var(--strip-h) - 2 * var(--edge-h));
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: calc(2.5vw + 6px);
+  background: linear-gradient(90deg, transparent, rgba(8, 6, 4, 0.6));
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.more-hint.is-on {
+  opacity: 1;
+}
+
+.stage.is-moving .more-hint {
+  opacity: 0;
+  transition-duration: 0.15s;
+}
+
+.more-hint svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
+  filter: drop-shadow(0 0 6px rgba(242, 138, 30, 0.6));
+  animation: more-nudge 2.4s ease-in-out infinite;
+}
+
+@keyframes more-nudge {
+  0%, 60%, 100% { transform: translateX(0); }
+  30% { transform: translateX(5px); }
+}
+
+/* ==========================================================
+   Aviso de borde: la película se oscurece antes de cambiar de fotograma
+   ========================================================== */
+.edge-hint {
+  --h: calc(var(--strip-h) * 0.5);
+  position: absolute;
+  z-index: 2;
+  left: max(0px, var(--peek-l) - 24px);              /* desde donde terminan las ruedas */
+  right: 2.5vw;
+  height: var(--h);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: calc(var(--edge-h) + 16px) 16px;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 90px);
+  mask-image: linear-gradient(90deg, transparent, #000 90px);
+}
+
+.edge-hint--prev {
+  top: calc(50% - var(--strip-h) / 2);
+  background: linear-gradient(180deg, rgba(4, 3, 2, 0.96), rgba(4, 3, 2, 0.78) 40%, transparent);
+}
+
+.edge-hint--next {
+  top: calc(50% + var(--strip-h) / 2 - var(--h));
+  flex-direction: column-reverse;
+  background: linear-gradient(0deg, rgba(4, 3, 2, 0.96), rgba(4, 3, 2, 0.78) 40%, transparent);
+}
+
+.edge-hint.is-on {
+  opacity: 1;
+}
+
+.edge-hint__label {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.edge-hint__sub {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Gesto terminado: el siguiente giro cambia de fotograma */
+.edge-hint.is-armed .edge-hint__label {
+  color: var(--accent);
+  text-shadow: 0 0 12px rgba(242, 138, 30, 0.6);
+}
+
+.edge-hint.is-armed .edge-hint__sub {
+  opacity: 1;
+}
+
+/* ==========================================================
+   Móvil: rollo a todo el ancho, el dial pasa abajo
+   ========================================================== */
+@media (max-width: 760px) {
+  .stage {
+    --peek-l: 0px;
+    inset: 0 0 calc(var(--dial-size) * 0.52) 0;
+  }
+
+  .track {
+    left: 12px;
+    right: 12px;
+  }
+
+  .frame--peek-l,
+  .frame--peek-r {
+    display: none;
+  }
+
+  .strip__frames {
+    padding: 0 8px;
+  }
+
+  .frame__grade {
+    background:
+      linear-gradient(0deg, rgba(10, 7, 5, 0.92) 0%, rgba(10, 7, 5, 0.6) 40%, rgba(10, 7, 5, 0) 75%),
+      linear-gradient(180deg, rgba(255, 140, 40, 0.16), rgba(0, 0, 0, 0) 45%);
+  }
+
+  .hero {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 22px;
+    padding: 22px 20px 26px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+
+  .hero__about {
+    width: auto;
+    grid-template-columns: 96px 1fr;
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .hero__bio {
+    font-size: 0.85rem;
+  }
+
+  .hero__note {
+    width: auto;
+    padding: 14px 16px;
+  }
+
+  .hero__note-a {
+    font-size: 1.1rem;
+  }
+
+  .hero__title {
+    font-size: clamp(2.4rem, 11vw, 3.4rem);
+  }
+
+  .advance--prev {
+    top: calc(50% - var(--strip-h) / 2 - 40px);
+  }
+
+  /* abajo ya está el dial; la flecha chocaría con su puntero */
+  .advance--next {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .more-hint svg {
+    animation: none;
+  }
+
+  .edge-hint,
+  .strip,
+  .reel__disc,
+  .reveal {
+    transition: none;
+  }
+}

@@ -1,0 +1,146 @@
+/* ==========================================================
+   Tokens
+   ========================================================== */
+:root {
+  color-scheme: dark;
+
+  --bg: #0b0907;
+  --ink: #f4ede3;
+  --ink-soft: #d9cfc2;
+  --muted: #a89c8d;
+  --accent: #f28a1e;
+  --accent-soft: #ffb062;
+  --film: #15110e;
+  --film-edge: #0f0c0a;
+  --hole: rgba(232, 220, 203, 0.86);
+  --metal-hi: #8d8379;
+  --metal-lo: #1c1916;
+
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Geometría compartida por el dial y el rollo */
+  /* Dos ruedas a la izquierda: la de navegación arriba y un carrete algo menor abajo,
+     parcialmente tapado por la primera. De cada una asoma algo más de la mitad. */
+  --dial-gap: 16px;                                  /* margen con el borde superior */
+  --dial-size: min(calc((100vh - 2 * var(--dial-gap)) / 1.63), 400px);
+  --reel-size: calc(var(--dial-size) * 0.85);
+  --wheel-show: 0.58;                                /* fracción visible del diámetro */
+  --dial-left: calc(var(--dial-size) * (var(--wheel-show) - 1));
+  --reel-left: calc(var(--reel-size) * (var(--wheel-show) - 1));
+  --reel-top: calc(var(--dial-gap) + var(--dial-size) * 0.78);  /* solapa el 22 % inferior de la rueda */
+  --dial-reach: calc(var(--dial-size) * var(--wheel-show));
+  --strip-h: clamp(320px, calc(100vh - 170px), 820px);  /* deja sitio a las flechas de arriba y abajo */
+  --strip-gap: 3.2vh;
+  --edge-h: clamp(30px, 7.5%, 46px);
+}
+
+@media (max-width: 760px) {
+  :root {
+    --dial-size: min(128vw, 560px);
+    --strip-h: clamp(360px, calc(100svh - var(--dial-size) * 0.52 - 84px), 680px);
+    --strip-gap: 22px;
+    --edge-h: 30px;
+  }
+}
+
+/* ==========================================================
+   Base
+   ========================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 70% at 92% 50%, rgba(242, 138, 30, 0.14), transparent 70%),
+    var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ==========================================================
+   Capas de película: grano, viñeta y parpadeo del proyector
+   ========================================================== */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.9s steps(5) infinite;
+}
+
+body::after {
+  /* viñeta */
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.65));
+}
+
+.flicker {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  background: #fff3e0;
+  opacity: 0;
+  mix-blend-mode: overlay;
+}
+
+@keyframes grain {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-3%, 2%); }
+  40%  { transform: translate(2%, -4%); }
+  60%  { transform: translate(-4%, -1%); }
+  80%  { transform: translate(3%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    animation: none;
+  }
+}

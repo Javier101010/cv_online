@@ -1,0 +1,300 @@
+/* El giro se anima a través de esta variable: la usan el rotor (gira)
+   y las etiquetas (contragiran para quedar siempre derechas). */
+@property --dial-rot {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 0deg;
+}
+
+.dial {
+  --base: -72deg;                                    /* opciones repartidas en la mitad visible, de arriba abajo */
+  --step: 36deg;                                     /* separación entre opciones (lo lee dial.js) */
+  --item-r: calc(var(--dial-size) * 0.328);
+
+  position: fixed;
+  z-index: 30;
+  left: var(--dial-left);
+  top: var(--dial-gap);
+  width: var(--dial-size);
+  height: var(--dial-size);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 66%, rgba(0, 0, 0, 0.55) 70%, transparent 72%),
+    conic-gradient(from 200deg, #2a2521, #6c635a, #2a2521, #4a433c, #1e1b18, #5d554d, #2a2521);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.07),
+    0 30px 90px rgba(0, 0, 0, 0.75),
+    inset 0 0 0 calc(var(--dial-size) * 0.01) #0d0b09;
+}
+
+.dial__rotor {
+  position: absolute;
+  inset: 2.5%;
+  border-radius: 50%;
+  transform: rotate(var(--dial-rot));
+  transition: --dial-rot 0.7s cubic-bezier(0.55, -0.2, 0.25, 1.25);
+}
+
+.dial__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: rotate(var(--base));
+}
+
+.dial__sector {
+  fill: url(#sector-fill);
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+  transition: stroke 0.4s ease, filter 0.4s ease;
+}
+
+.dial__sector--deco {
+  fill: #141210;
+}
+
+.dial__sector.is-active {
+  stroke: var(--accent);
+  stroke-width: 0.9;
+  filter: drop-shadow(0 0 2.5px rgba(242, 138, 30, 0.9));
+}
+
+/* ==========================================================
+   Opciones
+   ========================================================== */
+.dial__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dial__item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: rotate(calc(var(--base) + var(--k) * var(--step))) translateX(var(--item-r));
+}
+
+.dial__btn {
+  position: absolute;
+  width: calc(var(--dial-size) * 0.15);
+  height: calc(var(--dial-size) * 0.15);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--ink-soft);
+  font-size: clamp(0.68rem, calc(var(--dial-size) * 0.0195), 0.95rem);
+  font-weight: 500;
+  text-decoration: none;
+  transform: translate(-50%, -50%) rotate(calc(-1 * (var(--base) + var(--k) * var(--step) + var(--dial-rot))));
+  transition: color 0.35s ease;
+}
+
+.dial__btn:hover {
+  color: var(--ink);
+}
+
+.dial__btn[aria-current='true'] {
+  color: var(--accent);
+}
+
+.dial__label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45em;
+  white-space: nowrap;
+}
+
+.dial__label svg {
+  width: 2.1em;
+  height: 2.1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dial__btn[aria-current='true'] svg {
+  filter: drop-shadow(0 0 6px rgba(242, 138, 30, 0.75));
+}
+
+/* ==========================================================
+   Lente central y puntero
+   ========================================================== */
+.dial__lens {
+  position: absolute;
+  inset: 27.5%;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  background:
+    radial-gradient(circle at 38% 34%, rgba(255, 255, 255, 0.2), transparent 14%),
+    radial-gradient(circle at 64% 68%, rgba(242, 138, 30, 0.16), transparent 22%),
+    radial-gradient(circle, #040404 0 34%, #1b1815 35% 37%, #090808 38% 58%, #2e2924 59% 61%, #0c0b0a 62% 86%, #463e37 87% 90%, #121110 91%);
+  box-shadow:
+    0 0 0 calc(var(--dial-size) * 0.008) #0b0a09,
+    inset 0 0 calc(var(--dial-size) * 0.04) rgba(0, 0, 0, 0.9);
+}
+
+/* Botón centrado en la rueda (--wheel-show y el top móvil dejan ese centro visible) */
+.dial__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--dial-size) * 0.09);
+  height: calc(var(--dial-size) * 0.09);
+  transform: translate(-50%, -50%);
+  overflow: visible;
+}
+
+.dial__play-track,
+.dial__play-progress {
+  fill: rgba(0, 0, 0, 0.35);
+  stroke-width: 2;
+}
+
+.dial__play-track {
+  stroke: rgba(255, 255, 255, 0.14);
+}
+
+.dial__play-progress {
+  fill: none;
+  stroke: var(--accent);
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.dial__play-icon,
+.dial__pause-icon {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 5px rgba(242, 138, 30, 0.8));
+  transition: fill 0.25s ease;
+}
+
+.dial__pause-icon,
+.dial__lens:not([aria-pressed='true']) .dial__play-progress,
+.dial__lens[aria-pressed='true'] .dial__play-icon {
+  display: none;
+}
+
+.dial__lens[aria-pressed='true'] .dial__pause-icon {
+  display: inline;
+}
+
+.dial__lens:hover .dial__play-icon,
+.dial__lens:hover .dial__pause-icon {
+  fill: var(--accent-soft);
+}
+
+.dial__pointer {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: calc(var(--dial-size) * 0.04);
+  height: calc(var(--dial-size) * 0.05);
+  background: var(--accent);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  transform: translate(-35%, -50%);
+  filter: drop-shadow(0 0 8px rgba(242, 138, 30, 0.9));
+  display: none; /* en escritorio la rueda no gira: la opción activa se resalta en su sitio */
+}
+
+/* ==========================================================
+   Carrete inferior: corre el fotograma hacia un lado (pan.js)
+   ========================================================== */
+.reel {
+  position: fixed;
+  z-index: 29;                                       /* por debajo de la rueda superior */
+  left: var(--reel-left);
+  top: var(--reel-top);
+  width: var(--reel-size);
+  height: var(--reel-size);
+  border-radius: 50%;
+  background: conic-gradient(from 20deg, #2a2521, #6c635a, #2a2521, #4a433c, #1e1b18, #5d554d, #2a2521);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.07),
+    0 24px 70px rgba(0, 0, 0, 0.7),
+    inset 0 0 0 calc(var(--reel-size) * 0.012) #0d0b09;
+  filter: brightness(0.7) saturate(0.7);
+  touch-action: none;
+  user-select: none;
+  transition: filter 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Hay contenido fuera de la vista: el carrete se enciende y se puede girar */
+.reel.is-enabled {
+  filter: none;
+  cursor: grab;
+  box-shadow:
+    0 0 0 1px rgba(242, 138, 30, 0.35),
+    0 0 26px rgba(242, 138, 30, 0.18),
+    0 24px 70px rgba(0, 0, 0, 0.7),
+    inset 0 0 0 calc(var(--reel-size) * 0.012) #0d0b09;
+}
+
+.reel.is-enabled:active {
+  cursor: grabbing;
+}
+
+.reel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.reel__disc {
+  position: absolute;
+  inset: 3%;
+  width: 94%;
+  height: 94%;
+  pointer-events: none;
+  transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.reel.is-dragging .reel__disc {
+  transition: none;
+}
+
+/* ==========================================================
+   Móvil: dial abajo, apuntando hacia arriba
+   ========================================================== */
+@media (max-width: 760px) {
+  .reel {
+    display: none;
+  }
+
+  .dial {
+    --base: -90deg;
+    left: calc(50% - var(--dial-size) / 2);
+    top: calc(100svh - var(--dial-size) * 0.57);
+  }
+
+  .dial__btn {
+    font-size: clamp(0.62rem, calc(var(--dial-size) * 0.024), 0.8rem);
+  }
+
+  .dial__pointer {
+    display: block;
+    top: 0;
+    left: 50%;
+    width: calc(var(--dial-size) * 0.05);
+    height: calc(var(--dial-size) * 0.04);
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    transform: translate(-50%, -65%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dial__rotor,
+  .reel__disc {
+    transition-duration: 0.01ms;
+  }
+}

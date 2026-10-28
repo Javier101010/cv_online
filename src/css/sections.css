@@ -1,0 +1,622 @@
+/* ==========================================================
+   Fotogramas con contenido: fondo más oscuro y panel desplazable
+   ========================================================== */
+.strip--content .frame__grade {
+  background:
+    linear-gradient(90deg, rgba(10, 7, 5, 0.94) 0%, rgba(10, 7, 5, 0.86) 55%, rgba(10, 7, 5, 0.7) 100%),
+    linear-gradient(180deg, rgba(255, 140, 40, 0.12), rgba(0, 0, 0, 0) 45%);
+}
+
+.panel {
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(18px, 3.4vh, 36px) clamp(22px, 4.5%, 60px);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(242, 138, 30, 0.5) transparent;
+}
+
+.panel__kicker {
+  margin-bottom: 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.panel__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.2vw, 3rem);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.panel__lead {
+  max-width: 44rem;
+  margin-top: 0.9rem;
+  font-size: clamp(0.88rem, 1.05vw, 1rem);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* Miniaturas con el mismo tratamiento cálido que los fotogramas */
+.about__photo img,
+.timeline__item img,
+.project__cover {
+  display: block;
+  width: 100%;
+  height: auto; /* sin esto manda el atributo height y se ignora aspect-ratio */
+  object-fit: cover;
+  border-radius: 3px;
+  filter: sepia(0.25) saturate(1.1) contrast(1.05);
+}
+
+/* ==========================================================
+   Sobre mí (foto) y Formación
+   ========================================================== */
+.about__photo {
+  margin: 0;
+  padding: 8px 8px 28px;
+  background: #ece3d6;
+  border-radius: 2px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+  rotate: -2deg; /* independiente del transform que usa .reveal */
+}
+
+.about__photo img {
+  aspect-ratio: 4 / 5;
+  object-position: 50% 25%;
+}
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(242, 138, 30, 0.45);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.timeline__item img {
+  aspect-ratio: 2 / 1;
+  margin-bottom: 0.5rem;
+}
+
+.timeline__item strong {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.timeline__year {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================
+   Proyectos
+   ========================================================== */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin: 1.3rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 8px 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  background: rgba(20, 16, 13, 0.75);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.project:hover {
+  border-color: rgba(242, 138, 30, 0.6);
+  background: rgba(32, 24, 18, 0.85);
+}
+
+.project__cover {
+  aspect-ratio: 16 / 9;
+  margin-bottom: 0.55rem;
+}
+
+.project__cover--top {
+  object-position: 50% 0;
+}
+
+.project__tag,
+.project__cta {
+  padding: 0 4px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.project__title {
+  padding: 0 4px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.project__text {
+  flex: 1;
+  padding: 0 4px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.project__cta {
+  margin-top: 0.5rem;
+}
+
+.project__cta::after {
+  content: ' ▸';
+}
+
+/* ==========================================================
+   Habilidades
+   ========================================================== */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 20px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 2px solid var(--accent);
+  border-radius: 4px;
+  background: rgba(20, 16, 13, 0.7);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.skill svg {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 0.4rem;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.skill strong {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* Tecnologías agrupadas por tipo */
+.stack {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 18px 28px;
+  margin-top: 1.6rem;
+}
+
+.stack__title {
+  margin-bottom: 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chips li {
+  padding: 0.35em 0.85em;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(20, 16, 13, 0.7);
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* Herramientas que más domino: se iluminan */
+.chips .chip--main {
+  border-color: rgba(242, 138, 30, 0.75);
+  background: rgba(242, 138, 30, 0.12);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 0 14px rgba(242, 138, 30, 0.22);
+}
+
+.chip--main::before,
+.skills__key::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 0.5em 0.1em 0;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(242, 138, 30, 0.9);
+}
+
+.skills__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin-top: 0.8rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.skills__key--main {
+  color: var(--ink);
+}
+
+/* "He trabajado con": punto hueco */
+.skills__key:not(.skills__key--main)::before {
+  background: none;
+  border: 1px solid var(--muted);
+  box-shadow: none;
+}
+
+/* ==========================================================
+   Contacto
+   ========================================================== */
+.contact {
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 1.1fr);
+  gap: clamp(24px, 5%, 64px);
+  align-items: center;
+}
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 1.3rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.socials a {
+  display: inline-block;
+  padding: 0.5em 1em;
+  border: 1px solid rgba(242, 138, 30, 0.5);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.socials a:hover {
+  background: var(--accent);
+  color: #1a120b;
+}
+
+.contact__copy {
+  margin-top: 1.4rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contact__form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.contact__form input,
+.contact__form textarea {
+  padding: 0.75em 0.9em;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 4px;
+  background: rgba(10, 8, 6, 0.75);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.92rem;
+  letter-spacing: normal;
+  text-transform: none;
+  resize: vertical;
+}
+
+.contact__form input:focus,
+.contact__form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.btn {
+  align-self: flex-start;
+  padding: 0.8em 1.6em;
+  border: 0;
+  border-radius: 4px;
+  background: var(--accent);
+  color: #1a120b;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.btn:hover {
+  background: var(--accent-soft);
+}
+
+.contact__status {
+  min-height: 1.3em;
+  font-size: 0.82rem;
+  color: var(--accent-soft);
+}
+
+/* ==========================================================
+   Visor de proyectos
+   ========================================================== */
+.viewer {
+  width: min(1100px, 92vw);
+  max-height: 92vh;
+  padding: 0;
+  border: 1px solid rgba(242, 138, 30, 0.35);
+  border-radius: 6px;
+  background: #0f0c0a;
+  color: var(--ink);
+}
+
+.viewer::backdrop {
+  background: rgba(5, 4, 3, 0.82);
+  backdrop-filter: blur(3px);
+}
+
+.viewer__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.viewer__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.viewer__close {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.viewer__close:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.viewer__media video,
+.viewer__media iframe {
+  display: block;
+  width: 100%;
+  height: min(76vh, 680px);
+  border: 0;
+  background: #000;
+}
+
+.viewer__media iframe {
+  background: #fff;
+}
+
+/* ==========================================================
+   Móvil
+   ========================================================== */
+@media (max-width: 1100px) {
+  .skills {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .strip--content .frame__grade {
+    background: rgba(10, 7, 5, 0.88);
+  }
+
+  .panel {
+    padding: 20px 16px;
+  }
+
+  .contact {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .about__photo {
+    padding: 5px 5px 16px;
+  }
+
+  .timeline {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .timeline__item {
+    display: grid;
+    grid-template-columns: 84px 1fr;
+    column-gap: 12px;
+    align-items: start;
+  }
+
+  .timeline__item img {
+    grid-row: span 3;
+    aspect-ratio: 4 / 3;
+    margin: 0;
+  }
+
+  /* Los proyectos se deslizan en horizontal, para no chocar con el gesto vertical */
+  .projects {
+    display: flex;
+    gap: 12px;
+    margin-right: -16px;
+    padding-right: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .projects li {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+
+  .skills {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .skill {
+    padding: 14px;
+  }
+
+  .viewer {
+    width: 100vw;
+    max-width: 100vw;
+    max-height: 100svh;
+    border-radius: 0;
+  }
+
+  .viewer__media video,
+  .viewer__media iframe {
+    height: calc(100svh - 62px);
+  }
+}
+
+/* ==========================================================
+   Escritorio: el contenido se extiende a lo ancho; lo que no cabe
+   se ve girando el carrete inferior (pan.js alarga la tira)
+   ========================================================== */
+@media (min-width: 761px) {
+  .panel {
+    overflow-x: hidden;
+  }
+
+  .hero {
+    overflow-x: hidden;
+  }
+
+  .timeline,
+  .projects,
+  .skills,
+  .stack {
+    width: max-content;
+    grid-template-columns: none;
+    grid-auto-flow: column;
+  }
+
+  .timeline {
+    grid-auto-columns: clamp(260px, 24vw, 340px);
+    gap: 24px;
+  }
+
+  .timeline__item img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .projects {
+    grid-auto-columns: clamp(280px, 24vw, 360px);
+  }
+
+  .skills {
+    grid-auto-columns: 220px;
+    margin-top: 1.1rem;
+  }
+
+  /* Tarjetas más compactas para que quepan las dos filas de tecnologías */
+  .skill {
+    gap: 0.3rem;
+    padding: 14px 16px;
+  }
+
+  .skill svg {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 0.2rem;
+  }
+
+  .stack {
+    margin-top: 1.2rem;
+  }
+
+  /* Los grupos van en dos filas para que el fotograma no sea tan largo */
+  .stack {
+    grid-template-rows: repeat(2, auto);
+    grid-auto-columns: 220px;
+    gap: 12px 28px;
+  }
+
+  /* Metodologías va sola en la última columna: usa las dos filas */
+  .stack__group:last-child:nth-child(odd) {
+    grid-row: span 2;
+  }
+}
