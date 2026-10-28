@@ -3,159 +3,350 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Renee Enriquez</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <title>Rene Enriquez · Portafolio</title>
+  <meta name="description" content="Portafolio de Rene Enriquez: desarrollador web, móvil y de escritorio, y creador.">
+  <meta name="theme-color" content="#0b0907">
   <link rel="icon" type="image/png" href="https://i.imgur.com/MChLPvM.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600&display=swap">
+  <script type="module" crossorigin src="./assets/index-DOdfaBVn.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BXeJNq_H.css">
 </head>
 <body>
-  <!-- Header -->
-  <header class="text-white py-3">
-    <div class="container-fluid d-flex justify-content-between align-items-center">
-      <div>
-        <h3>Renee Enriquez</h3>
-      </div>
-      <nav>
-        <ul class="nav">
-          <li class="nav-item"><a href="#presentacion" class="nav-link text-white">Presentacion</a></li>
-          <li class="nav-item"><a href="#information" class="nav-link text-white">Informacion</a></li>
-          <li class="nav-item"><a href="#contacto" class="nav-link text-white">Contacto</a></li>
-        </ul>
-      </nav>
+  <!-- Dial de navegación: la rueda gira para dejar la sección activa frente al puntero -->
+  <nav class="dial" aria-label="Secciones">
+    <div class="dial__rotor">
+      <svg class="dial__ring" viewBox="-100 -100 200 200" aria-hidden="true"></svg>
+      <ul class="dial__items">
+        <li class="dial__item" style="--k: 0">
+          <a class="dial__btn" href="#sobre-mi" data-index="0">
+            <span class="dial__label">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20.5c1.2-4.2 4.3-6 8-6s6.8 1.8 8 6"/></svg>
+              Sobre mí
+            </span>
+          </a>
+        </li>
+        <li class="dial__item" style="--k: 1">
+          <a class="dial__btn" href="#formacion" data-index="1">
+            <span class="dial__label">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9.5 12 5l10 4.5-10 4.5z"/><path d="M6 11.5V16c1.6 1.5 3.7 2.2 6 2.2s4.4-.7 6-2.2v-4.5M22 9.5V15"/></svg>
+              Formación
+            </span>
+          </a>
+        </li>
+        <li class="dial__item" style="--k: 2">
+          <a class="dial__btn" href="#proyectos" data-index="2">
+            <span class="dial__label">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 4.5-9 4.5-9-4.5z"/><path d="m3 12 9 4.5 9-4.5M3 16.5 12 21l9-4.5"/></svg>
+              Proyectos
+            </span>
+          </a>
+        </li>
+        <li class="dial__item" style="--k: 3">
+          <a class="dial__btn" href="#habilidades" data-index="3">
+            <span class="dial__label">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg>
+              Habilidades
+            </span>
+          </a>
+        </li>
+        <li class="dial__item" style="--k: 4">
+          <a class="dial__btn" href="#contacto" data-index="4">
+            <span class="dial__label">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="1.5"/><path d="m3.5 6.5 8.5 7 8.5-7"/></svg>
+              Contacto
+            </span>
+          </a>
+        </li>
+      </ul>
     </div>
-  </header>
+    <!-- Lente: botón de reproducción del recorrido automático -->
+    <button class="dial__lens" type="button" aria-pressed="false" aria-label="Reproducir recorrido">
+      <svg class="dial__play" viewBox="0 0 48 48" aria-hidden="true">
+        <circle class="dial__play-track" cx="24" cy="24" r="22"/>
+        <circle class="dial__play-progress" cx="24" cy="24" r="22" pathLength="1"/>
+        <path class="dial__play-icon" d="M19 14.5 34.5 24 19 33.5z"/>
+        <path class="dial__pause-icon" d="M17.5 15h4.5v18h-4.5zM26 15h4.5v18H26z"/>
+      </svg>
+    </button>
+    <span class="dial__pointer" aria-hidden="true"></span>
+  </nav>
 
-  <!-- Main Section -->
-  <main>
+  <!-- Carrete inferior: corre el fotograma hacia un lado para ver lo que no cabe -->
+  <div class="reel" role="slider" aria-label="Desplazar fotograma" aria-orientation="horizontal"
+       aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-disabled="true" tabindex="-1">
+    <svg class="reel__disc" viewBox="-100 -100 200 200"></svg>
+  </div>
 
-    <section id="presentacion" class="presen text-center">
-      <div class="container">
-        <h1>Presentacion</h1>
-        <p class="mb-4">
-          Mis estudios y herramientas de desarrollo
-        </p>
-        <p>
-          Mi nombre es Renee Enriquez Montalvan, soy un programador cuya especialidad es el desarrollo web,
-          aunque he realizado proyectos para otras plataformas.
-          Mis areas de conocimiento van desde el Frontend hasta Backend. 
-        </p>
-        <div class="row mt-4">
-          <div class="col-md-6 mb-4">
-            <div class="card">
-              <img src="imagen/britanico.jpeg" class="card-img-top" alt="Idiomas">
-              <div class="card-body">
-                <h5 class="card-title">Idiomas</h5>
-                <p class="card-text">Estudie ingles en el instituto peruano britanico desde el 2014</p>
+  <!-- Escenario: la "cámara" que se aleja y se acerca; dentro, el rollo con los fotogramas -->
+  <main class="stage">
+    <div class="camera">
+      <div class="track">
+
+        <section class="strip" id="sobre-mi" aria-labelledby="sobre-mi-title" data-shot="50% 30%">
+          <div class="hero">
+            <div class="hero__intro">
+              <p class="hero__kicker reveal">Bienvenido</p>
+              <h1 class="hero__title reveal" id="sobre-mi-title">Hola,<br>soy <em>Rene</em></h1>
+              <p class="hero__roles reveal">Desarrollador <span>·</span> Creador</p>
+              <hr class="hero__rule reveal">
+              <p class="hero__tagline reveal">Tecnología, ideas y proyectos<br>para construir un mejor futuro.</p>
+            </div>
+            <div class="hero__about">
+              <figure class="about__photo reveal">
+                <img src="./assets/perfil-B7N3coT5.jpg" alt="Renee Enriquez sentado en unas escaleras" width="640" height="640">
+              </figure>
+              <p class="hero__bio reveal">
+                Mi nombre es Renee Enriquez Montalvan. Soy programador y mi especialidad es el desarrollo web,
+                aunque también he realizado proyectos para otras plataformas. Mis áreas de conocimiento van
+                desde el frontend hasta el backend. Ahora me estoy adaptando a la IA y la uso como apoyo
+                en mis proyectos e ideas.
+              </p>
+            </div>
+            <aside class="hero__note reveal">
+              <p class="hero__note-q">¿Por qué un rollo de cámara?</p>
+              <p class="hero__note-a">Siempre me ha parecido interesante el proceso de revelar una foto.</p>
+            </aside>
+          </div>
+        </section>
+
+        <section class="strip strip--content" id="formacion" aria-labelledby="formacion-title" data-shot="30% 70%">
+          <div class="panel">
+            <p class="panel__kicker reveal">Fotograma 02</p>
+            <h2 class="panel__title reveal" id="formacion-title">Formación</h2>
+            <ol class="timeline" aria-label="Formación">
+              <li class="timeline__item reveal">
+                <img src="./assets/britanico-DlainTQv.jpg" alt="" width="480" height="407">
+                <span class="timeline__year">2014</span>
+                <strong>Inglés</strong>
+                <span>Instituto Peruano Británico</span>
+              </li>
+              <li class="timeline__item reveal">
+                <img src="./assets/cibertec-BQLN1QCi.jpg" alt="" width="480" height="360">
+                <span class="timeline__year">2017</span>
+                <strong>Computación e Informática</strong>
+                <span>Instituto Cibertec</span>
+              </li>
+              <li class="timeline__item reveal">
+                <img src="./assets/upc-C09HgSh7.jpg" alt="" width="480" height="216">
+                <span class="timeline__year">2022 · en curso</span>
+                <strong>Ciencias de la Computación</strong>
+                <span>Universidad Peruana de Ciencias Aplicadas</span>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="strip strip--content" id="proyectos" aria-labelledby="proyectos-title" data-shot="70% 55%">
+          <div class="panel">
+            <p class="panel__kicker reveal">Fotograma 03</p>
+            <h2 class="panel__title reveal" id="proyectos-title">Proyectos</h2>
+            <p class="panel__lead reveal">Algunos de mis aportes al desarrollo de diversas plataformas.</p>
+            <ul class="projects">
+              <li class="reveal">
+                <button class="project" type="button" data-type="video" data-src="video/koppi.mp4" data-title="Koppi">
+                  <img class="project__cover" src="./assets/koppi-Dhxlcl3Q.jpg" alt="" width="800" height="450">
+                  <span class="project__tag">Web</span>
+                  <span class="project__title">Koppi</span>
+                  <span class="project__text">Página web para la venta de tazas y el envío de correos.</span>
+                  <span class="project__cta">Ver demo</span>
+                </button>
+              </li>
+              <li class="reveal">
+                <button class="project" type="button" data-type="video" data-src="video/pedidos-android.mp4" data-title="Registro de pedidos">
+                  <img class="project__cover project__cover--top" src="./assets/pedidos-android-DTHG1RMp.jpg" alt="" width="480" height="776">
+                  <span class="project__tag">Móvil · Android</span>
+                  <span class="project__title">Registro de pedidos</span>
+                  <span class="project__text">App para registrar pedidos. Por privacidad, varias funciones no se muestran.</span>
+                  <span class="project__cta">Ver demo</span>
+                </button>
+              </li>
+              <li class="reveal">
+                <button class="project" type="button" data-type="iframe" data-src="proyectos/desktop/algebra_booleana.html" data-title="Funciones Booleanas">
+                  <img class="project__cover" src="./assets/booleana-BJJgedRS.jpg" alt="" width="800" height="450">
+                  <span class="project__tag">Escritorio</span>
+                  <span class="project__title">Funciones Booleanas</span>
+                  <span class="project__text">Leyes del álgebra de Boole y operador de expresiones. Matemática Discreta, grupo 3.</span>
+                  <span class="project__cta">Probar</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="strip strip--content" id="habilidades" aria-labelledby="habilidades-title" data-shot="20% 45%">
+          <div class="panel">
+            <p class="panel__kicker reveal">Fotograma 04</p>
+            <h2 class="panel__title reveal" id="habilidades-title">Habilidades</h2>
+            <p class="skills__legend reveal" aria-hidden="true">
+              <span class="skills__key skills__key--main">Mayor dominio</span>
+              <span class="skills__key">He trabajado con</span>
+            </p>
+            <ul class="skills">
+              <li class="skill reveal">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="13" rx="1.5"/><path d="M8 21h8M12 17.5V21M9.5 9 7.5 11l2 2M14.5 9l2 2-2 2"/></svg>
+                <strong>Desarrollo web</strong>
+                <span>Mi especialidad, del frontend al backend.</span>
+              </li>
+              <li class="skill reveal">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="2"/><path d="M10.5 18.5h3"/></svg>
+                <strong>Desarrollo móvil</strong>
+                <span>Aplicaciones para Android.</span>
+              </li>
+              <li class="skill reveal">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="12" rx="1.5"/><path d="M1.5 19.5h21"/></svg>
+                <strong>Desarrollo de escritorio</strong>
+                <span>Proyectos para plataformas de escritorio.</span>
+              </li>
+              <li class="skill reveal">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h9M8.5 3v2M6 5c.5 3 2.5 5.5 5.5 7M11 5c-.8 3.5-3.3 6.5-7 8.5M12.5 21l4-10 4 10M14 17.5h5"/></svg>
+                <strong>Inglés</strong>
+                <span>Instituto Peruano Británico desde 2014.</span>
+              </li>
+              <li class="skill reveal">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-9l-4.5 3.5V16.5H4a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z"/><path d="M8 10h8M8 13h5"/></svg>
+                <strong>Portugués</strong>
+                <span>Nivel básico.</span>
+              </li>
+            </ul>
+            <div class="stack">
+              <div class="stack__group reveal">
+                <h3 class="stack__title">Lenguajes</h3>
+                <ul class="chips">
+                  <li class="chip--main">Java<span class="visually-hidden"> (mayor dominio)</span></li>
+                  <li class="chip--main">JavaScript<span class="visually-hidden"> (mayor dominio)</span></li>
+                  <li>Python</li>
+                </ul>
+              </div>
+              <div class="stack__group reveal">
+                <h3 class="stack__title">Frontend</h3>
+                <ul class="chips">
+                  <li class="chip--main">Angular<span class="visually-hidden"> (mayor dominio)</span></li>
+                  <li>SvelteKit</li>
+                  <li>Astro</li>
+                </ul>
+              </div>
+              <div class="stack__group reveal">
+                <h3 class="stack__title">Backend</h3>
+                <ul class="chips">
+                  <li class="chip--main">Node.js<span class="visually-hidden"> (mayor dominio)</span></li>
+                  <li>Express</li>
+                  <li>FastAPI</li>
+                  <li class="chip--main">Spring Boot<span class="visually-hidden"> (mayor dominio)</span></li>
+                </ul>
+              </div>
+              <div class="stack__group reveal">
+                <h3 class="stack__title">Móvil</h3>
+                <ul class="chips">
+                  <li class="chip--main">Android Studio<span class="visually-hidden"> (mayor dominio)</span></li>
+                </ul>
+              </div>
+              <div class="stack__group reveal">
+                <h3 class="stack__title">Escritorio</h3>
+                <ul class="chips">
+                  <li class="chip--main">Electron<span class="visually-hidden"> (mayor dominio)</span></li>
+                  <li>Tauri</li>
+                </ul>
+              </div>
+              <div class="stack__group reveal">
+                <h3 class="stack__title">Bases de datos</h3>
+                <ul class="chips">
+                  <li class="chip--main">SQL Server<span class="visually-hidden"> (mayor dominio)</span></li>
+                  <li class="chip--main">MySQL<span class="visually-hidden"> (mayor dominio)</span></li>
+                  <li class="chip--main">SQLite<span class="visually-hidden"> (mayor dominio)</span></li>
+                  <li class="chip--main">PostgreSQL<span class="visually-hidden"> (mayor dominio)</span></li>
+                </ul>
+              </div>
+              <div class="stack__group reveal">
+                <h3 class="stack__title">Entorno</h3>
+                <ul class="chips">
+                  <li>Docker</li>
+                  <li class="chip--main">Linux<span class="visually-hidden"> (mayor dominio)</span></li>
+                </ul>
+              </div>
+              <div class="stack__group reveal">
+                <h3 class="stack__title">Inteligencia artificial</h3>
+                <ul class="chips">
+                  <li>Claude</li>
+                  <li>Codex</li>
+                  <li>OpenClaw</li>
+                </ul>
+              </div>
+              <div class="stack__group reveal">
+                <h3 class="stack__title">Metodologías y áreas</h3>
+                <ul class="chips">
+                  <li class="chip--main">Scrum<span class="visually-hidden"> (mayor dominio)</span></li>
+                  <li class="chip--main">Análisis de sistemas<span class="visually-hidden"> (mayor dominio)</span></li>
+                  <li>Ciencia de datos</li>
+                </ul>
               </div>
             </div>
           </div>
-          <div class="col-md-6  mb-4">
-            <div class="card">
-              <img src="imagen/cibertec.jpg" class="card-img-top" alt="Design">
-              <div class="card-body">
-                <h5 class="card-title">Instituto</h5>
-                <p class="card-text">Empece mis estudios tecnicos en el año 2017 en el instituto
-                  Cibertec, en la carrera de Computacion e Informatica
-                </p>
-              </div>
+        </section>
+
+        <section class="strip strip--content" id="contacto" aria-labelledby="contacto-title" data-shot="60% 85%">
+          <div class="panel contact">
+            <div class="contact__intro">
+              <p class="panel__kicker reveal">Fotograma 05</p>
+              <h2 class="panel__title reveal" id="contacto-title">Contacto</h2>
+              <p class="panel__lead reveal">Escríbeme y te responderé lo más pronto posible.</p>
+              <ul class="socials reveal">
+                <li><a href="https://www.linkedin.com/in/renee-enriquez-montalvan-89ba961a9/" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a href="https://x.com/reneeenriquezm" target="_blank" rel="noopener">X (Twitter)</a></li>
+                <li><a href="https://github.com/Javier101010" target="_blank" rel="noopener">GitHub</a></li>
+              </ul>
+              <p class="contact__copy reveal">© 2026 Renee Enriquez Montalvan</p>
             </div>
+            <form class="contact__form reveal">
+              <label>
+                Tu correo
+                <input type="email" name="email" required autocomplete="email" placeholder="nombre@gmail.com">
+              </label>
+              <label>
+                Motivo
+                <textarea name="motivo" rows="4" required placeholder="Cuéntame en qué te puedo ayudar"></textarea>
+              </label>
+              <button class="btn" type="submit">Enviar mensaje</button>
+              <p class="contact__status" role="status"></p>
+            </form>
           </div>
-        </div>
-        <div class="row mt-4">
-          <div class="col-md-12 mb-4">
-            <div class="card">
-              <img src="imagen/upc.jpeg" class="card-img-top" alt="Programming">
-              <div class="card-body">
-                <h5 class="card-title">Universidad</h5>
-                <p class="card-text">Me encuentro estudiando en la Universidad Peruana de 
-                  Ciencias Aplicadas en la carrera de Ciencias de la Computacion, empece el año
-                  2022
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        </section>
+
       </div>
-    </section>
+    </div>
 
-    <!-- Introduction -->
-    <section id="information" class="intro text-center">
-      <div class="container">
-        <h1 class="mb-4">Informacion</h1>
-        <p>
-          Aqui puedes encontrar algunos de mis aportes al desarrollo de diversas plataformas
-        </p>
-        <div class="row mt-4">
-          <div class="col-md-4 mb-4">
-            <div class="card" id="web">
-              <img src="imagen/web_development.jpg" class="card-img-top" alt="Programming">
-              <div class="card-body">
-                <h5 class="card-title mb-4">Desarrollo Web</h5>
-                <p class="card-text">Algunos proyectos web que implementé</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-4 mb-4">
-            <div class="card" id="movil">
-              <img src="imagen/movil_development.jpg" class="card-img-top" alt="Design">
-              <div class="card-body">
-                <h5 class="card-title mb-4">Desarrollo Móvil</h5>
-                <p class="card-text">Proyectos de aplicaciones móviles</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-4 mb-4">
-            <div class="card" id="desktop">
-              <img src="imagen/desktop_development.jpg" class="card-img-top" alt="Hobbies">
-              <div class="card-body">
-                <h5 class="card-title mb-4">Desarrollo en Escritorio</h5>
-                <p class="card-text">Proyectos para plataformas de escritorio</p>
-              </div>
-            </div>
-          </div>
-          
-        </div>
-      </div>
-    </section>
+    <button class="advance advance--prev" type="button" aria-label="Sección anterior"></button>
+    <button class="advance advance--next" type="button" aria-label="Sección siguiente"></button>
 
-    <!-- Contacto -->
-    <section id="contacto" class="gallery text-center">
-      <div class="container">
-        <h2 class="text-center mb-4">contacto</h2>
-        <p class="mb-4">Ingrese su mensaje y le contestare lo mas pronto posible</p>
-        <div class="row g-3 mb-4">
-          <form>
-            <div class="form-group mb-4">
-              <label for="exampleFormControlInput1">Escriba su email</label>
-              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="nombre@gmail.com">
-            </div>
-            
-            <div class="form-group">
-              <label for="exampleFormControlTextarea1">Escriba su motivo</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Motivo de contacto"></textarea>
-            </div>
-          </form>
-      </div>
-    </section>
+    <!-- Pista: el fotograma sigue a la derecha (pan.js la muestra mientras quede contenido) -->
+    <div class="more-hint" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>
+    </div>
 
+    <!-- Aviso al llegar al borde del fotograma con la rueda del mouse (edge.js) -->
+    <div class="edge-hint edge-hint--prev" aria-hidden="true">
+      <span class="edge-hint__label">▲ Arriba</span>
+      <span class="edge-hint__sub">Gira otra vez para pasar al fotograma anterior</span>
+    </div>
+    <div class="edge-hint edge-hint--next" aria-hidden="true">
+      <span class="edge-hint__label">▼ Abajo</span>
+      <span class="edge-hint__sub">Gira otra vez para pasar al fotograma siguiente</span>
+    </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white text-center py-3">
-    <div class="container">
-      <a style="border-right: 3px rgb(167, 167, 167) solid; " href="https://www.linkedin.com/in/renee-enriquez-montalvan-89ba961a9/?originalSubdomain=pe">LinkedIn</a>
-      <a style="border-right: 3px rgb(167, 167, 167) solid; " href="https://x.com/reneeenriquezm?t=j01vWYiBKEkpvSe73njojg&s=35">X (Twitter)</a>
-      <a href="https://github.com/Javier101010">Github</a>
+  <!-- Visor de proyectos -->
+  <dialog class="viewer" aria-labelledby="viewer-title">
+    <div class="viewer__head">
+      <h3 class="viewer__title" id="viewer-title"></h3>
+      <button class="viewer__close" type="button" aria-label="Cerrar">✕</button>
     </div>
-    <div class="container">
-      <p>&copy; 2024 Renee Enriquez Montalvan</p>
-    </div>
-  </footer>
+    <div class="viewer__media"></div>
+  </dialog>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="./js/function.js"></script>
+  <div class="flicker" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <p class="visually-hidden" aria-live="polite" id="announcer"></p>
+
 </body>
 </html>
